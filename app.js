@@ -60,7 +60,7 @@ if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'production') {
     // Démarrage local seulement
     app.listen(process.env.PORT, () => {
         console.log('Server is running on http://localhost:' + process.env.PORT);
-    })
+    });
 }
 
 module.exports = app;
