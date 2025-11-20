@@ -10,6 +10,15 @@ exports.getProducts = async (req, res) => {
     }
 };
 
+exports.getProductsByCategory = async (req, res) => {
+    try {
+        const products = await Product.find({ category: req.params.category }).sort({ createdAt: -1 });
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la récupération des produits par catégorie', error });
+    }
+};
+
 exports.getProduct = async (req, res) => {
     try {
         const productId = req.params.id;
@@ -49,7 +58,7 @@ exports.updateProduct = async (req, res) => {
         if (name) product.name = name;
         if (description) product.description = description;
         if (price) product.price = price;
-        if (available) product.available = available;
+        if (available !== undefined) product.available = available;
         if (category) product.category = category;
         if (image) product.image = image;
         const updatedProduct = await product.save();

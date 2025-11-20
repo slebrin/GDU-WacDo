@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const { ORDER_STATUSES } = require('../config/constants');
 
 const orderSchema = new mongoose.Schema({
     orderNumber: { type: String, required: true, unique: true },
-    status: { type: String, enum: ['en_attente', 'en_preparation', 'preparee', 'livree'], default: 'en_attente' },
+    status: { type: String, enum: ORDER_STATUSES, default: 'en_attente' },
     total: { type: Number, required: true },
     items: [{ 
         item: { type: String, required: true },
