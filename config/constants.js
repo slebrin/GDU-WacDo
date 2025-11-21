@@ -6,3 +6,6 @@ exports.ORDER_STATUSES = ['en_attente', 'en_preparation', 'preparee', 'livree'];
 
 // Roles utilisateurs
 exports.USER_ROLES = ['admin', 'preparateur', 'accueil'];
+
+// Autres constantes
+exports.ITEMS_MODELS = ['Product', 'Menu'];

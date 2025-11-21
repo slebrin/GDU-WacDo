@@ -3,7 +3,7 @@ const Menu = require('../models/menu.model');
 
 exports.getMenus = async (req, res) => {
     try {
-        const menus = await Menu.find().sort({ createdAt: -1 }).populate('products');
+        const menus = await Menu.find().populate('products').sort({ createdAt: -1 });
         res.status(200).json(menus);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la récupération des menus', error });

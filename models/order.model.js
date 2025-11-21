@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
-const { ORDER_STATUSES } = require('../config/constants');
+const { ORDER_STATUSES, ITEMS_MODELS } = require('../config/constants');
 
 const orderSchema = new mongoose.Schema({
-    orderNumber: { type: String, required: true, unique: true },
+    orderNumber: { type: String, required: true },
     status: { type: String, enum: ORDER_STATUSES, default: 'en_attente' },
     total: { type: Number, required: true },
     items: [{ 
-        item: { type: String, required: true },
-        type: { type: String, enum: ['product', 'menu'], required: true },
+        item: { type: mongoose.Schema.Types.ObjectId, refPath: 'items.itemModel', required: true },
+        itemModel: { type: String, enum: ITEMS_MODELS, required: true },
         quantity: { type: Number, required: true, min: 1 },
         price: { type: Number, required: true }
     }]
