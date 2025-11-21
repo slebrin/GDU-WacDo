@@ -50,6 +50,7 @@ exports.updateMenu = async (req, res) => {
         if (price) menu.price = price;
         if (available !== undefined) menu.available = available;
         const updatedMenu = await menu.save();
+        await updatedMenu.populate('products');
         res.status(200).json(updatedMenu);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la mise à jour du menu', error });

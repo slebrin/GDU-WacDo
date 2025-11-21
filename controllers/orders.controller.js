@@ -48,8 +48,10 @@ exports.createOrder = async (req, res) => {
             const lastNumber = parseInt(lastOrderToday.orderNumber);
             orderNumber = String(lastNumber + 1).padStart(3, '0');
         }
-        const newOrder = new Order({ orderNumber, status: req.body.status || 'en_attente', total: req.body.total, items: req.body.items });
+        const { status, total, items } = req.body;
+        const newOrder = new Order({ orderNumber, status: status || 'en_attente', total, items });
         const savedOrder = await newOrder.save();
+        await savedOrder.populate('items.item');
         res.status(201).json(savedOrder);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la création de la commande', error });
@@ -64,6 +66,7 @@ exports.updateOrderStatus = async (req, res) => {
         }
         order.status = req.body.status;
         const updatedOrder = await order.save();
+        await updatedOrder.populate('items.item');
         res.status(200).json(updatedOrder);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la mise à jour du statut de la commande', error });
