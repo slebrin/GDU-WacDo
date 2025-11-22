@@ -1,5 +1,5 @@
 const { body, validationResult } = require('express-validator');
-const { PRODUCT_CATEGORIES, ORDER_STATUSES, ITEMS_MODELS } = require('../config/constants');
+const { PRODUCT_CATEGORIES, ORDER_STATUSES, ITEMS_MODELS, USER_ROLES } = require('../config/constants');
 
 // Middleware pour gérer les erreurs de validation
 exports.handleValidationErrors = (req, res, next) => {
@@ -40,4 +40,18 @@ exports.validateOrder = [
 // Validation du statut d'une commande
 exports.validateOrderStatus = [
     body('status').notEmpty().withMessage("Le statut est requis").isIn(ORDER_STATUSES).withMessage("Statut invalide")
+];
+
+// Validation de l'inscription
+exports.validateRegister = [
+    body('username').optional().trim().isLength({ min: 2 }).withMessage("Le nom d'utilisateur doit contenir au moins 2 caractères"),
+    body('email').notEmpty().withMessage("L'email est requis").isEmail().withMessage("Format d'email invalide").normalizeEmail(),
+    body('password').isStrongPassword({ minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1 }).withMessage('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre'),
+    body('role').notEmpty().withMessage("Le rôle est requis").isIn(USER_ROLES).withMessage("Rôle invalide")
+];
+
+// Validation de la connexion
+exports.validateLogin = [
+    body('email').notEmpty().withMessage("L'email est requis").isEmail().withMessage("Format d'email invalide").normalizeEmail(),
+    body('password').notEmpty().withMessage("Le mot de passe est requis")
 ];

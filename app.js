@@ -57,6 +57,7 @@ connectDB();
 app.use('/api/products', require('./routes/products.routes'));
 app.use('/api/menus', require('./routes/menus.routes'));
 app.use('/api/orders', require('./routes/orders.routes'));
+app.use('/api/users', require('./routes/users.routes'));
 
 if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'production') {
     // Démarrage local seulement

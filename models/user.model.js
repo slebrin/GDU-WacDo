@@ -5,7 +5,7 @@ const operatorSchema = new mongoose.Schema({
     username: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, enum: USER_ROLES, default: 'accueil' }
+    role: { type: String, enum: USER_ROLES, default: 'accueil', required: true }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Operator', operatorSchema);

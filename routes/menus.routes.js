@@ -1,7 +1,10 @@
 const express = require('express');
 const { getMenus, getMenu, createMenu, updateMenu, deleteMenu, updateMenuProducts } = require('../controllers/menus.controller');
 const { validateMenu, handleValidationErrors } = require('../middleware/validators');
+const { auth, authorize } = require('../middleware/auth');
 const router = express.Router();
+
+router.use(auth, authorize('admin')); // protège toutes les routes menus
 
 router.get('/', getMenus);
 router.get('/:id', getMenu);
