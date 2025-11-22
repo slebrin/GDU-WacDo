@@ -46,7 +46,7 @@ exports.validateOrderStatus = [
 exports.validateRegister = [
     body('username').optional().trim().isLength({ min: 2 }).withMessage("Le nom d'utilisateur doit contenir au moins 2 caractères"),
     body('email').notEmpty().withMessage("L'email est requis").isEmail().withMessage("Format d'email invalide").normalizeEmail(),
-    body('password').isStrongPassword({ minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1 }).withMessage('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre'),
+    body('password').isStrongPassword({ minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 }).withMessage('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre'),
     body('role').notEmpty().withMessage("Le rôle est requis").isIn(USER_ROLES).withMessage("Rôle invalide")
 ];
 

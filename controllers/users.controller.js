@@ -44,3 +44,16 @@ exports.loginUser = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la connexion', error });
     }
 };
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const user = await Operator.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé' });
+        }
+        await user.deleteOne();
+        res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la suppression de l\'utilisateur', error });
+    }
+};
