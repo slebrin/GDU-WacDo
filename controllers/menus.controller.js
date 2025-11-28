@@ -31,6 +31,7 @@ exports.createMenu = async (req, res) => {
         const { name, description, products, price, available } = req.body;
         const newMenu = new Menu({ name, description, products, price, available });
         const savedMenu = await newMenu.save();
+        await savedMenu.populate('products');
         res.status(201).json(savedMenu);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la création du menu', error });

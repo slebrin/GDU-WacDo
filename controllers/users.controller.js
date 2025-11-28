@@ -54,6 +54,6 @@ exports.deleteUser = async (req, res) => {
         await user.deleteOne();
         res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
     } catch (error) {
-        res.status(500).json({ message: 'Erreur lors de la suppression de l\'utilisateur', error });
+        res.status(500).json({ message: "Erreur lors de la suppression de l'utilisateur", error });
     }
 };

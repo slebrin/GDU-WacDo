@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const dotenv = require('dotenv');
+const setupSwagger = require('./swagger');
 
 dotenv.config();
 const app = express();
@@ -58,6 +59,8 @@ app.use('/api/products', require('./routes/products.routes'));
 app.use('/api/menus', require('./routes/menus.routes'));
 app.use('/api/orders', require('./routes/orders.routes'));
 app.use('/api/users', require('./routes/users.routes'));
+
+setupSwagger(app);
 
 if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'production') {
     // Démarrage local seulement
