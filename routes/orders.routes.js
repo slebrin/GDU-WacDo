@@ -125,7 +125,6 @@ router.get('/:orderNumber', authorize('preparateur', 'accueil'), getOrder);
  *                     quantity:
  *                       type: number
  *             required:
- *               - total
  *               - items
  *     responses:
  *       201:

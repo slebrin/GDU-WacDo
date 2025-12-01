@@ -28,12 +28,12 @@ exports.validateMenu = [
 
 // Validation des commandes
 exports.validateOrder = [
-    body('total').notEmpty().withMessage("Le total est requis").isFloat({ min: 0 }).withMessage("Le total doit être un nombre positif"),
     body('items').isArray({ min: 1 }).withMessage("La commande doit contenir au moins un article"),
     body('items.*.item').notEmpty().withMessage("L'identifiant de l'article est requis"),
     body('items.*.itemModel').isIn(ITEMS_MODELS).withMessage('Le modèle doit être "Product" ou "Menu"'),
     body('items.*.quantity').isInt({ min: 1 }).withMessage("La quantité doit être un entier positif"),
     body('items.*.price').isFloat({ min: 0 }).withMessage("Le prix doit être un nombre positif"),
+    body('total').optional().isFloat({ min: 0 }).withMessage("Le total doit être un nombre positif"),
     body('status').optional().isIn(ORDER_STATUSES).withMessage("Statut invalide")
 ];
 

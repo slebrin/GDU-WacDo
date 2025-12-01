@@ -1,4 +1,5 @@
 const Order = require('../models/order.model');
+const { calculateOrderTotal } = require('../utils/helpers');
 
 exports.getOrders = async (req, res) => {
     try {
@@ -48,8 +49,9 @@ exports.createOrder = async (req, res) => {
             const lastNumber = parseInt(lastOrderToday.orderNumber);
             orderNumber = String(lastNumber + 1).padStart(3, '0');
         }
-        const { status, total, items } = req.body;
-        const newOrder = new Order({ orderNumber, status: status || 'en_attente', total, items });
+        const { status, items, total } = req.body;
+        const finalTotal = (total == null) ? calculateOrderTotal(items) : total;
+        const newOrder = new Order({ orderNumber, status: status || 'en_attente', total: finalTotal, items });
         const savedOrder = await newOrder.save();
         await savedOrder.populate('items.item');
         res.status(201).json(savedOrder);

@@ -135,7 +135,7 @@ router.get('/:id', getProduct);
  *       500:
  *         description: Erreur serveur
  */
-router.post('/', validateProduct, handleValidationErrors, createProduct);
+router.post('/', uploadMiddleware.single('image'), validateProduct, handleValidationErrors, createProduct);
 
 /**
  * @swagger
@@ -173,6 +173,8 @@ router.post('/', validateProduct, handleValidationErrors, createProduct);
  *               image:
  *                 type: string
  *                 format: binary
+ *               imageUrl:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Produit mis à jour avec succès

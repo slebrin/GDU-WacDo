@@ -1,6 +1,21 @@
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
+// Déterminer le serveur actif en fonction de l'environnement
+const getActiveServer = () => {
+    if (process.env.NODE_ENV === 'production') {
+        return {
+            url: 'https://gdu-wac-do.vercel.app',
+            description: 'Serveur de production'
+        };
+    } else {
+        return {
+            url: 'http://localhost:8000',
+            description: 'Serveur de développement'
+        };
+    }
+};
+
 const options = {
     definition: {
         openapi: "3.0.0",
@@ -9,16 +24,7 @@ const options = {
             version: "1.0.0",
             description: "Documentation de l'API permettant de gérer les produits, les menus, les utilisateurs et les commandes.",
         },
-        servers: [
-            {
-                url: 'https://gdu-wac-do.vercel.app',
-                description: 'Serveur de production'
-            },
-            {
-                url: 'http://localhost:8000',
-                description: 'Serveur de développement'
-            }
-        ],
+        servers: [getActiveServer()],
         components: {
             securitySchemes: {
                 bearerAuth: {
